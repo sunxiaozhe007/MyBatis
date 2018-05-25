@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper    
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"    
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace：命名空间，对statement的信息进行分类管理 -->
+<!-- 在mapper代理时，它具有特殊及重要的作用 -->
+<mapper namespace="Mapper.UserMapper">
+	<!--根据用户id查询用户信息-->
+	<select id="findUserById" parameterType="int" resultType="user">
+		select * from user where id = #{id}
+	</select>
+
+		<!--添加用户-->
+	<insert id="insertUser" parameterType="po.User">
+		<selectKey keyProperty="id" resultType="int" order="AFTER">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		INSERT INTO user (username,birthday,sex,address) VALUES(#{username},#{birthday},#{sex},#{address})
+	</insert>
+
+
+    <!--第一sql片段-->
+    <!--sql片段内可以定义sql语句中任何部分-->
+    <!--sql片段内最好不要将where和select关键字声明在内-->
+    <sql id="whereClause">
+        <!--if标签：可以对输入的参数进行判断-->
+        <if test="user != null">
+            <if test="user.username != null and user.username != ''">
+                username like '%${user.username}%'
+            </if>
+            <!--test：指定判断表达式-->
+            <if test="user.sex != null and user.sex !=''">
+                and sex = #{user.sex}
+            </if>
+        </if>
+        
+        <if test="idlist != null">
+            <!--AND ID IN (#{id},#{id},#{id})-->
+            <!--collection:表示pojo中集合属性的属性名称-->
+            <!--item:为遍历出的结果声明一个变量名称-->
+            <!--open:遍历开始时，需要拼接的字符串-->
+            <!--separator:遍历中间需要拼接的字符串-->
+             AND id IN
+            <foreach collection="idlist" item="id" open=" ("
+                                                    close=")"
+                                                    separator="," >
+                #{id}
+            </foreach>
+        </if>
+    </sql>
+
+
+
+
+	<!--综合查询，查询用户列表-->
+	<select id="findUserList" parameterType="po.UserQueryVO" resultType="user">
+		select * from user
+        <!--where标签：默认去掉后面第一个AND，如果没有参数，则把自己干掉-->
+		<where>
+          <!--引入sql片段-->
+            <include refid="whereClause"/>
+		</where>
+</select>
+
+	<!--综合查询用户总数-->
+	<select id="findUserCount" parameterType="po.UserQueryVO" resultType="int">
+		SELECT COUNT(*) FROM USER
+        <where>
+            <include refid="whereClause"/>
+        </where>
+	</select>
+	
+	<!--resultMap入门-->
+	<!--id标签：专门为查询结果中唯一列映射-->
+	<!--result标签：映射查询结果中的普通列-->
+	<resultMap id="UserRstMap" type="user">
+		<id column="id_" property="id"/>
+		<result column="username_" property="username"/>
+		<result column="sex_" property="sex"/>
+	</resultMap>
+	<select id="findUserRstMap" parameterType="int" resultMap="UserRstMap">
+		select id id_,username username_,sex sex_ from user where id = #{id}
+	</select>
+
+
+</mapper>
+
