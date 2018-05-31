@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="spring-context-indexer-5.0.1.RELEASE">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/spring-context-indexer-5.0.1.RELEASE.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

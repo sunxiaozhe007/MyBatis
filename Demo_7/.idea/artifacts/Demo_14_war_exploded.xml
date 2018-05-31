@@ -1,0 +1,20 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="Demo_14:war exploded">
+    <output-path>$PROJECT_DIR$/out/artifacts/Demo_14_war_exploded</output-path>
+    <root id="root">
+      <element id="javaee-facet-resources" facet="Demo_14/web/Web" />
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="Demo_14" />
+        </element>
+        <element id="directory" name="lib">
+          <element id="library" level="project" name="lib" />
+          <element id="library" level="project" name="mybatis-3.4.5" />
+          <element id="library" level="project" name="Spring-4.3.16.RELEASE" />
+          <element id="library" level="project" name="spring-context-indexer-5.0.1.RELEASE" />
+          <element id="library" level="project" name="Spring MVC-4.3.16.RELEASE" />
+        </element>
+      </element>
+    </root>
+  </artifact>
+</component>
