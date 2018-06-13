@@ -9,15 +9,15 @@ public class UserDaoTest {
 
     ApplicationContext applicationContext = new ClassPathXmlApplicationContext("config/spring/applicationContext.xml");
 
-    @Test
-    public void findUserById() {
 
-        //创建UserDao
-        UserDao userDao = (UserDao) applicationContext.getBean("userDao");
+        @Test
+        public void findUserById() {
 
-        User user = userDao.findUserById(1);
+            //创建UserDao
+            UserDao userDao = (UserDao) applicationContext.getBean("userDao");
 
-        System.out.println(user);
+            User user = userDao.findUserById(1);
 
+            System.out.println(user);
     }
 }
